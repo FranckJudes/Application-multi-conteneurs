@@ -66,4 +66,4 @@ Add the following secrets to your GitHub repository:
    - Deploy the application using Docker Compose
 
 
-This project is part of [roadmap.sh](https://roadmap.sh/projects/static-site-server) DevOps projects.
+This project is part of [roadmap.sh](https://roadmap.sh/projects/multi-container-service) DevOps projects.
