@@ -1,0 +1,12 @@
+---
+all:
+  children:
+    todo_servers:
+      hosts:
+        todo_server:
+          ansible_host: "{{ server_ip }}"
+          ansible_user: root
+          ansible_ssh_private_key_file: "{{ ssh_private_key_path }}"
+  vars:
+    docker_username: "{{ lookup('env', 'DOCKER_USERNAME') }}"
+    docker_password: "{{ lookup('env', 'DOCKER_PASSWORD') }}"

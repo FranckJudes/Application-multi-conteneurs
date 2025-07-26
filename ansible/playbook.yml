@@ -1,0 +1,7 @@
+---
+- name: Configure server for Docker and deploy Todo application
+  hosts: todo_servers
+  become: true
+  roles:
+    - docker
+    - app

@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  api:
+    image: ${DOCKER_USERNAME}/todo-api:latest
+    container_name: todo-api
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongo:27017/todos
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6
+    container_name: todo-mongo
+    restart: always
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=todos
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/certs:/etc/nginx/certs
+    depends_on:
+      - api
+
+volumes:
+  mongo-data:

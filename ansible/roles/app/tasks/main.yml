@@ -1,0 +1,49 @@
+---
+- name: Create app directory
+  file:
+    path: /opt/todo-app
+    state: directory
+    mode: '0755'
+
+- name: Copy docker-compose.prod.yml
+  copy:
+    src: files/docker-compose.prod.yml
+    dest: /opt/todo-app/docker-compose.yml
+    mode: '0644'
+
+- name: Create nginx directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - /opt/todo-app/nginx/conf.d
+    - /opt/todo-app/nginx/certs
+
+- name: Copy nginx configuration
+  copy:
+    src: files/nginx/conf.d/default.conf
+    dest: /opt/todo-app/nginx/conf.d/default.conf
+    mode: '0644'
+
+- name: Create .env file
+  template:
+    src: templates/.env.j2
+    dest: /opt/todo-app/.env
+    mode: '0644'
+
+- name: Login to Docker Hub
+  docker_login:
+    username: "{{ docker_username }}"
+    password: "{{ docker_password }}"
+  no_log: true
+
+- name: Pull Docker images
+  command: docker-compose -f /opt/todo-app/docker-compose.yml pull
+  args:
+    chdir: /opt/todo-app
+
+- name: Start Docker containers
+  command: docker-compose -f /opt/todo-app/docker-compose.yml up -d
+  args:
+    chdir: /opt/todo-app
