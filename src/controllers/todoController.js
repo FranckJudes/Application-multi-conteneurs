@@ -1,6 +1,5 @@
 const Todo = require('../models/Todo');
 
-// Get all todos
 exports.getAllTodos = async (req, res) => {
   try {
     const todos = await Todo.find();
@@ -10,7 +9,6 @@ exports.getAllTodos = async (req, res) => {
   }
 };
 
-// Get a single todo
 exports.getTodoById = async (req, res) => {
   try {
     const todo = await Todo.findById(req.params.id);
@@ -23,7 +21,6 @@ exports.getTodoById = async (req, res) => {
   }
 };
 
-// Create a new todo
 exports.createTodo = async (req, res) => {
   try {
     const todo = new Todo({
@@ -39,7 +36,6 @@ exports.createTodo = async (req, res) => {
   }
 };
 
-// Update a todo
 exports.updateTodo = async (req, res) => {
   try {
     const todo = await Todo.findById(req.params.id);
@@ -58,7 +54,6 @@ exports.updateTodo = async (req, res) => {
   }
 };
 
-// Delete a todo
 exports.deleteTodo = async (req, res) => {
   try {
     const todo = await Todo.findById(req.params.id);

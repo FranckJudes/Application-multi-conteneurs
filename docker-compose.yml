@@ -19,7 +19,7 @@ services:
     command: npm run dev
 
   mongo:
-    image: mongo:6
+    image: mongo:latest
     container_name: todo-mongo
     restart: always
     ports:
